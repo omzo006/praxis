@@ -1,0 +1,105 @@
+# Live Code API #
+
+**This page is a work in progress**
+
+Where the built-in components don't provide features you want, it is possible to use the live-coding components to code your own features.  For ease of learning, these components use a subset of the Processing API, with a few key additions to provide access to features of the Praxis environment.  You can learn more about Processing at http://processing.org
+
+Two components in Praxis currently support live-coding with this API - `core:code:custom` can be used in audio and video patches, and deals solely with control signals; `video:code:composite` can only be used in a video patch and provides more of the familiar graphics features from Processing. All code is compiled on-the-fly, and can be edited as your project is running (be aware that the value of fields will be reset, though the state of controls is maintained). You can have as many custom components as you want within a patch - Praxis encourages you to break your ideas into lots of simple ideas rather than one monolithic sketch - there is no additional overhead to this and it makes life much easier!  You should also check out the `video:opengl:filter` component, which allows you to live code custom GLSL shaders.
+
+With the `video:code:composite` component you should override the `setup()` and `draw()` methods as you would in Processing. `setup()` will be called once, and `draw()` will be called on every frame.  With the `core:code:custom` component you should override `update()` which will be called on every frame.
+
+
+
+
+
+## Processing API (core) ##
+
+| **Field / Method** | **Signature(s)** | **Description** |
+|:-------------------|:-----------------|:----------------|
+| abs                | `double abs(double value)` | Calculates the absolute value (magnitude) of a number. The absolute value of a number is always positive.<br>See also <a href='http://processing.org/reference/abs_.html'>http://processing.org/reference/abs_.html</a> <br>
+<tr><td> acos               </td><td> <code>double acos(double value)</code> </td><td> The inverse of cos(), returns the arc cosine of a value. This function expects the values in the range of -1 to 1 and values are returned in the range 0 to PI.<br>See also <a href='http://processing.org/reference/acos_.html'>http://processing.org/reference/acos_.html</a> </td></tr>
+<tr><td> asin               </td><td> <code>double asin(double value)</code> </td><td> The inverse of sin(), returns the arc sine of a value. This function expects the values in the range of -1 to 1 and values are returned in the range -PI/2 to PI/2.<br>See also <a href='http://processing.org/reference/asin_.html'>http://processing.org/reference/asin_.html</a> </td></tr>
+<tr><td> atan               </td><td> <code>double atan(double value)</code> </td><td> The inverse of tan(), returns the arc tangent of a value. Values are returned in the range -PI/2 to PI/2 .<br>See also <a href='http://processing.org/reference/atan_.html'>http://processing.org/reference/atan_.html</a> </td></tr>
+<tr><td> atan2              </td><td> <code>double atan2(double x, double y)</code> </td><td> Calculates the angle (in radians) from a specified point to the coordinate origin as measured from the positive x-axis. Values are returned as a float in the range from PI to -PI.<br>See also <a href='http://processing.org/reference/atan2_.html'>http://processing.org/reference/atan2_.html</a> </td></tr>
+<tr><td> constrain          </td><td> <code>int constrain(int value, int min, int max)</code><br><code>double constrain(double value, double min, double max)</code> </td><td> Constrain the value between min and max. See also <a href='http://processing.org/reference/constrain_.html'>http://processing.org/reference/constrain_.html</a> </td></tr>
+<tr><td> cos                </td><td> <code>double cos(double angle)</code> </td><td> Calculate the cosine of an angle. The angle should be in radians.<br>See also <a href='http://processing.org/reference/cos_.html'>http://processing.org/reference/cos_.html</a> </td></tr>
+<tr><td> exp                </td><td> <code>double exp(double value)</code> </td><td> Returns Euler's number e (2.71828...) raised to the power of the value parameter.<br>See also <a href='http://processing.org/reference/exp_.html'>http://processing.org/reference/exp_.html</a> </td></tr>
+<tr><td> log                </td><td> <code>double log(double value)</code> </td><td> Calculates the natural logarithm (the base-e logarithm) of a number. This function expects the value is greater than 0.0.<br>See also <a href='http://processing.org/reference/log_.html'>http://processing.org/reference/log_.html</a> </td></tr>
+<tr><td> max                </td><td> <code>double max(double a, double b)</code><br><code>double max(double a, double b, double c)</code> </td><td> Determines the largest value.<br>See also <a href='http://processing.org/reference/max_.html'>http://processing.org/reference/max_.html</a> </td></tr>
+<tr><td> noise              </td><td> <code>double noise(double x)</code><br><code>double noise(double x, double y)</code><br><code>double noise(double x, double y, double z)</code> </td><td> Returns the perlin noise value at the specified coordinates.<br>See also <a href='http://processing.org/reference/noise_.html'>http://processing.org/reference/noise_.html</a> </td></tr>
+<tr><td> noiseDetail        </td><td> <code>void noiseDetail(double octaves)</code><br><code>void noiseDetail(double octaves, double falloff)</code> </td><td> Adjusts the character and level of detail produced by the Perlin noise function.<br>See also <a href='http://processing.org/reference/noiseDetail_.html'>http://processing.org/reference/noiseDetail_.html</a> </td></tr>
+<tr><td> noiseSeed          </td><td> <code>void noiseSeed(double seed)</code> </td><td> Sets the seed value for noise().<br>See also <a href='http://processing.org/reference/noiseSeed_.html'>http://processing.org/reference/noiseSeed_.html</a> </td></tr>
+<tr><td> pow                </td><td> <code>double pow(double number, double exponent)</code> </td><td> Returns <code>number</code> raised to the power of the <code>exponent</code>.<br>See also <a href='http://processing.org/reference/pow_.html'>http://processing.org/reference/pow_.html</a> </td></tr>
+<tr><td> random             </td><td> <code>double random(double max)</code><br><code>double random(double min, double max)</code> </td><td> Returns a random number between 0 and max, or between min and max.<br>See also <a href='http://processing.org/reference/random_.html'>http://processing.org/reference/random_.html</a> </td></tr>
+<tr><td> sin                </td><td> <code>double sin(double angle)</code> </td><td> Calculate the sine of an angle. The angle should be in radians.<br>See also <a href='http://processing.org/reference/sin_.html'>http://processing.org/reference/sin_.html</a> </td></tr>
+<tr><td> sq                 </td><td> <code>double sq(double value)</code> </td><td> Squares a number (multiplies a number by itself). The result is always a positive number, as multiplying two negative numbers always yields a positive result. <br>See also <a href='http://processing.org/reference/sq_.html'>http://processing.org/reference/sq_.html</a> </td></tr>
+<tr><td> tan                </td><td> <code>double tan(double angle)</code> </td><td> Calculate the tangent of an angle. The angle should be in radians.<br>See also <a href='http://processing.org/reference/tan_.html'>http://processing.org/reference/tan_.html</a> </td></tr></tbody></table>
+
+<h3>PVector</h3>
+
+It is also possible to create objects of type PVector - see <a href='http://processing.org/reference/PVector.html'>http://processing.org/reference/PVector.html</a>
+
+<h2>Praxis extensions (core)</h2>
+
+Extensions to the Processing API provide ways of integrating with the Praxis environment.<br>
+<br>
+<table><thead><th> <b>Field / Method</b> </th><th> <b>Signature(s)</b> </th><th> <b>Description</b> </th></thead><tbody>
+<tr><td> d                     </td><td> <code>double d(int idx)</code> </td><td> Value of parameter as a double. Non-numeric parameters will return <code>0</code>. Parameters are indexed from 1 to match the ids of ports / controls. </td></tr>
+<tr><td> i                     </td><td> <code>int i(int idx)</code> </td><td> Value of parameter as an int. Non-numeric parameters will return <code>0</code>. Parameters are indexed from 1 to match the ids of ports / controls. </td></tr>
+<tr><td> p                     </td><td> <code>Param p(int idx)</code> </td><td> Parameter as a <code>Param</code> object (see below). Parameters are indexed from 1 to match the ids of ports / controls. </td></tr>
+<tr><td> send                  </td><td> <code>void send(int idx, double value)</code><br><code>void send(int idx, Argument arg)</code> </td><td> Send a signal from the indexed output port. Indexes are from 1 to match the ids of output ports. </td></tr>
+<tr><td> t                     </td><td> <code>boolean t(int idx)</code> </td><td> Check if a trigger was called. Triggers are indexed from 1 to match the ids of ports / controls.<br><i>NB. Currently calling this method resets the trigger so that a subsequent call would return <code>false</code>.  This behaviour may change in the future. For forward compatibility, only check the trigger once per update.</i> </td></tr></tbody></table>
+
+<h3>Param</h3>
+
+Methods on Param objects.  Params can be animated - set the value to animate and read from it whenever you want.  Some methods return a Param object so that they can be chained together.<br>
+<br>
+eg.<br><code>p(1).to(3.2).in(5);</code> <i>//animate parameter 1 to a value of 3.2 in 5 seconds</i>
+
+<table><thead><th> <b>Method</b> </th><th> <b>Signature(s)</b> </th><th> <b>Description</b> </th></thead><tbody>
+<tr><td> getDouble     </td><td> <code>double getDouble(double def)</code> </td><td> Return the value of the parameter as a double, or return <code>def</code> if the parameter value is not numeric. It is usually easier to use d(..) above. </td></tr>
+<tr><td> getInt        </td><td> <code>double getInt(int def)</code> </td><td> Return the value of the parameter as an int, or return <code>def</code> if the parameter value is not numeric. It is usually easier to use i(..) above. </td></tr>
+<tr><td> isAnimating   </td><td> <code>boolean isAnimating()</code> </td><td> Return whether the Param is currently animating. Useful for triggering a subsequent animation. </td></tr>
+<tr><td> in            </td><td> <code>Param in(double time)</code> </td><td> Set the animation time. </td></tr>
+<tr><td> set           </td><td> <code>Param set(double value)</code><br><code>Param set(Argument value)</code> </td><td> Set the current value of the Param. Cancels animation. </td></tr>
+<tr><td> to            </td><td> <code>Param to(double value)</code> </td><td> Set the target value for animation. </td></tr></tbody></table>
+
+
+
+<h2>Processing API (video)</h2>
+
+The video API is currently only supported by <code>video:code:composite</code>.<br>
+<br>
+<table><thead><th> <b>Field / Method</b> </th><th> <b>Signature(s)</b> </th><th> <b>Description</b> </th></thead><tbody>
+<tr><td> background            </td><td> <code>void background(double grey)</code><br><code>void background(double grey, alpha)</code><br><code>void background(double r, g, b)</code><br><code>void background(double r, g, b, a)</code> </td><td> Clear the surface and fill with the provided colour.<br>See also <a href='http://processing.org/reference/background_.html'>http://processing.org/reference/background_.html</a> </td></tr>
+<tr><td> beginShape            </td><td> <code>void beginShape()</code> </td><td> Start drawing a complex shape (see <code>vertex()</code>, <code>bezierVertex()</code>, <code>breakShape()</code> and <code>endShape()</code>). Praxis does not currently support anything but the default shape mode.<br>See also <a href='http://processing.org/reference/beginShape_.html'>http://processing.org/reference/beginShape_.html</a> </td></tr>
+<tr><td> bezier                </td><td> <code>void bezier(double x1, y1, cx1, cy1, cx2, cy2, x2, y2)</code> </td><td> Draw a bezier curve. The first two parameters specify the first anchor point and the last two parameters specify the other anchor point. The middle parameters specify the control points which define the shape of the curve.<br>See also <a href='http://processing.org/reference/bezier_.html'>http://processing.org/reference/bezier_.html</a> </td></tr>
+<tr><td> bezierVertex          </td><td> <code>void bezierVertex(double cx1, cy1, cx2, cy2, x, y)</code> </td><td> Specify a bezier vertex. Can only be used within a <code>beginShape()</code> / <code>endShape()</code> pair.<br>See also <a href='http://processing.org/reference/bezierVertex_.html'>http://processing.org/reference/bezierVertex_.html</a> </td></tr>
+<tr><td> ellipse               </td><td> <code>void ellipse(double x, y, width, height)</code> </td><td> Draws an ellipse in the frame. An ellipse with an equal width and height is a circle. The first two parameters set the location, the third sets the width, and the fourth sets the height. The location is the centre point of the ellipse (<code>ellipseMode()</code> is not yet supported).<br>See also <a href='http://processing.org/reference/ellipse_.html'>http://processing.org/reference/ellipse_.html</a> </td></tr>
+<tr><td> endShape              </td><td> <code>void endShape()</code><br><code>void endShape(CLOSE)</code> </td><td> Finish and render a shape started with <code>beginShape()</code>. Pass in the constant <code>CLOSE</code> to close the path before rendering.<br>See also <a href='http://processing.org/reference/endShape_.html'>http://processing.org/reference/endShape_.html</a> </td></tr>
+<tr><td> fill                  </td><td> <code>void fill(double grey)</code><br><code>void fill(double grey, alpha)</code><br><code>void fill(double r, g, b)</code><br><code>void fill(double r, g, b, a)</code> </td><td> Set the current fill colour for rendering shapes. Values are between 0 and 255 (<code>colorMode()</code> is not yet supported).<br>See also <a href='http://processing.org/reference/fill_.html'>http://processing.org/reference/fill_.html</a> </td></tr>
+<tr><td> height                </td><td> <code>int height</code> </td><td> The height of the destination surface in pixels. </td></tr>
+<tr><td> image                 </td><td> <code>void image(PImage img, double x, y)</code><br><code>void image(PImage img, double x, y, w, h)</code><br><code>void image(PImage img, double x, y, w, h, u1, v1)</code><br><code>void image(PImage img, double x, y, w, h, u1, v1, u2, v2)</code> </td><td> Draw an image. See <code>src</code> and <code>img()</code> in the Praxis extension for how to access / load images in the Praxis environment. The 8 arg method allows to draw a section of an image - nb. u1,v1 and u2,v2 are absolute coordinates.  The 6 arg method is an extension to Processing, that makes it easier to draw a section of an image without scaling - u2 is calculated as u1 + width, and v2 is calculated as v1 + height.<br>See also <a href='http://processing.org/reference/image_.html'>http://processing.org/reference/image_.html</a> </td></tr>
+<tr><td> line                  </td><td> <code>void line(double x1, double y1, double x2, double y2)</code> </td><td> Draw a straight line between two points.<br>See also <a href='http://processing.org/reference/line_.html'>http://processing.org/reference/line_.html</a> </td></tr>
+<tr><td> noFill                </td><td> <code>void noFill()</code> </td><td> Disable filling of shapes. Use <code>fill()</code> to reenable.<br>See also <a href='http://processing.org/reference/noFill_.html'>http://processing.org/reference/noFill_.html</a> </td></tr>
+<tr><td> noSmooth              </td><td> <code>void noSmooth()</code> </td><td> Switch off smoothing.  Currently has no affect in Praxis. </td></tr>
+<tr><td> noStroke              </td><td> <code>void noStroke()</code> </td><td> Disable drawing the outline of shapes. Use <code>stroke()</code> to reenable.<br>See also <a href='http://processing.org/reference/noStroke_.html'>http://processing.org/reference/noStroke_.html</a> </td></tr>
+<tr><td> point                 </td><td> <code>void point(double x, y)</code> </td><td> Draw a one-pixel point.<br>See also <a href='http://processing.org/reference/point_.html'>http://processing.org/reference/point_.html</a> </td></tr>
+<tr><td> quad                  </td><td> <code>void quad(double x1, y1, x2, y2, x3, y3, x4, y4)</code> </td><td> Draw a quadrilateral, a 4-sided polygon.<br>See also <a href='http://processing.org/reference/quad_.html'>http://processing.org/reference/quad_.html</a> </td></tr>
+<tr><td> rect                  </td><td> <code>void rect(double x, y, width, height)</code> </td><td> Draw a rectangle. The first two parameters set the location of the upper-left corner (<code>rectMode()</code> is not yet supported).<br>See also <a href='http://processing.org/reference/rect_.html'>http://processing.org/reference/rect_.html</a> </td></tr>
+<tr><td> stroke                </td><td> <code>void stroke(double grey)</code><br><code>void stroke(double grey, alpha)</code><br><code>void stroke(double r, g, b)</code><br><code>void stroke(double r, g, b, a)</code> </td><td> Set the current stroke (outline) colour for rendering shapes. Values are between 0 and 255 (<code>colorMode()</code> is not yet supported).<br>See also <a href='http://processing.org/reference/stroke_.html'>http://processing.org/reference/stroke_.html</a> </td></tr>
+<tr><td> strokeWeight          </td><td> <code>void strokeWeight(double weight)</code> </td><td> Set the stroke width used for lines and the outline of shapes.<br>See also <a href='http://processing.org/reference/strokeWeight_.html'>http://processing.org/reference/strokeWeight_.html</a> </td></tr>
+<tr><td> triangle              </td><td> <code>void triangle(double x1, y1, x2, y2, x3, y3)</code> </td><td> Draw a triangle.<br>See also <a href='http://processing.org/reference/triangle_.html'>http://processing.org/reference/triangle_.html</a> </td></tr>
+<tr><td> vertex                </td><td> <code>void vertex(double x, y)</code> </td><td> Specify a vertex. Can only be used within a <code>beginShape()</code> / <code>endShape()</code> pair.<br>See also <a href='http://processing.org/reference/vertex_.html'>http://processing.org/reference/vertex_.html</a> </td></tr>
+<tr><td> width                 </td><td> <code>int width</code> </td><td> The width of the destination surface in pixels. </td></tr></tbody></table>
+
+
+<h2>Praxis extensions (video)</h2>
+
+<table><thead><th> <b>Field / Method</b> </th><th> <b>Signature(s)</b> </th><th> <b>Description</b> </th></thead><tbody>
+<tr><td> blendMode             </td><td> <code>void blendMode(Blend type)</code> </td><td> The Praxis renderer allows the use of blend modes for all draw functions. The available blend modes are NORMAL, ADD, SUBTRACT, DIFFERENCE, MULTIPLY, SCREEN and BITXOR. You can also set the opacity for all these blend modes - opacity is between 0 and 1. The default blend mode is equivalent to NORMAL at full opacity.<br><br>eg.<br><code>blendMode(DIFFERENCE);</code><br><code>blendMode(MULTIPLY.opacity(0.6));</code> </td></tr>
+<tr><td> clear                 </td><td> <code>void clear()</code> </td><td> Clear the image, to black or transparent depending on whether the surface has an alpha channel. This is more efficient than calling <code>background()</code>. </td></tr>
+<tr><td> img                   </td><td> <code>PImage img(int idx)</code> </td><td> Gives access to images loaded using the <code>img</code> controls on the component. Images are indexed from 1 to match the id of the controls. It is possible to get the dimensions of the image using the width and height fields on the image. </td></tr>
+<tr><td> op                    </td><td> <code>void op(SurfaceOp op)</code><br><code>void op(SurfaceOp op, PImage img)</code> </td><td> Gives full access to the underlying <code>op</code> framework that powers the Praxis video renderer. Useful ops not yet accessible in other ways include the BlurOp and the GraphicsOp.<br><br>eg.<br><code>op(Sub.op( Blur.op(5),0,0,100,100));</code><i>//blur a 100x100 section of the image with a radius of 5 pixels.</i> </td></tr>
+<tr><td> send                  </td><td> <code>void send(int idx, double value)</code><br><code>void send(int idx, Argument arg)</code> </td><td> Send a signal from the indexed output port. Indexes are from 1 to match the ids of output ports. Send behaves differently in video components.  Because <code>draw()</code> is called after control signals are processed, messages are queued up and sent in the next control cycle. </td></tr>
+<tr><td> src                   </td><td> <code>PImage src</code> </td><td> Using the <code>video:code:composite</code> component, <code>src</code> gives access to the image coming in the <code>src</code> video port. </td></tr>
